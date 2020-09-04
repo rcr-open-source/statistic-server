@@ -1,0 +1,63 @@
+{
+  "name": "@umk/statistic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build-package": "tsc",
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "lint:fix": "eslint ./src/**/*.{js,ts,tsx} --fix",
+    "test": "jest",
+    "statjest": "jest --coverage"
+  },
+  "license": "ISC",
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "@umk/statistic-server-core": "^0.6.0",
+    "@umk/statistic-server-database": "^0.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "subscriptions-transport-ws": "^0.9.17",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.7",
+    "@types/node": "^14.0.27",
+    "@types/winston": "^2.4.4",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.9.7"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "<rootDir>/tests/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    }
+  }
+}
