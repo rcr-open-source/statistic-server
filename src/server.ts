@@ -1,5 +1,5 @@
-import { Options, initInstance } from "@umk/statistic-server-database";
-import { getMiddleware, execute, subscribe } from "@umk/statistic-server-core";
+import { Options, initInstance } from "@umk-stat/statistic-server-database";
+import { getMiddleware, execute, subscribe } from "@umk-stat/statistic-server-core";
 import { errorLogger, infoLogger } from "./loggers";
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import express from "express";

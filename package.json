@@ -1,5 +1,5 @@
 {
-  "name": "@umk/statistic",
+  "name": "@umk-stat/statistic-server",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -13,8 +13,8 @@
   "license": "ISC",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@umk/statistic-server-core": "^0.6.0",
-    "@umk/statistic-server-database": "^0.0.1",
+    "@umk-stat/statistic-server-core": "^0.6.0",
+    "@umk-stat/statistic-server-database": "^0.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "subscriptions-transport-ws": "^0.9.17",
