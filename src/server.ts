@@ -4,6 +4,8 @@ import { errorLogger, infoLogger } from "./loggers";
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import express from "express";
 import cors from "cors";
+import bodyParser from "body-parser";
+
 export async function runServer(): Promise<void> {
 
     const port = process.env.PORT ? Number(process.env.PORT) : 8001;
@@ -47,6 +49,10 @@ export async function runServer(): Promise<void> {
 
     const app = express();
     app.use(cors());
+    app.use(bodyParser.json({
+        limit: "50mb",
+    }));
+    app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
     app.use(graphql.middleware);
     app.listen(apiPort, () => {
         infoLogger.info("graphiql is  running");
