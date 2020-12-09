@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build-package": "tsc",
-    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "dev": "ts-node-dev --respawn --tls-min-v1.0 -- ./src/index.ts",
     "lint:fix": "eslint ./src/**/*.{js,ts,tsx} --fix",
     "test": "jest",
     "statjest": "jest --coverage"

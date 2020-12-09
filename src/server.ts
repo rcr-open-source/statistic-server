@@ -4,6 +4,7 @@ import { errorLogger, infoLogger } from "./loggers";
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import express from "express";
 import cors from "cors";
+import { createServer } from "http";
 import bodyParser from "body-parser";
 
 export async function runServer(): Promise<void> {
@@ -52,12 +53,10 @@ export async function runServer(): Promise<void> {
     app.use(bodyParser.json({
         limit: "50mb",
     }));
-    app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+    app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
     app.use(graphql.middleware);
-    app.listen(apiPort, () => {
-        infoLogger.info("graphiql is  running");
-    });
-
+    const server = createServer(app);
+    
     const subscriptionServer = new SubscriptionServer({
         schema: graphql.schema,
         execute,
@@ -65,11 +64,11 @@ export async function runServer(): Promise<void> {
         onConnect: async () => {
             const map = await databaseApi.queries.findMapAssociations();
             const graphQLObjectMap = map.reduce((prev, val) => {
-
+                
                 const value = val.get();
                 prev.set(value.NUMBER, value.tableName);
                 return prev;
-
+                
             }, new Map<string, string>());
             const context = {
                 graphQLObjectMap,
@@ -79,10 +78,12 @@ export async function runServer(): Promise<void> {
             };
             return context;
         }
-
+        
     }, {
-        port,
-        path: "/subscription",
+        server,
     });
-
+    
+    server.listen(apiPort, () => {
+        infoLogger.info("graphiql is  running");
+    });
 }
