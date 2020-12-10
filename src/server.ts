@@ -81,6 +81,7 @@ export async function runServer(): Promise<void> {
         
     }, {
         server,
+        path: "/subscription",
     });
     
     server.listen(apiPort, () => {
