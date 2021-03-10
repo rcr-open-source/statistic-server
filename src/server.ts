@@ -1,5 +1,5 @@
 import { Options, initInstance } from "@umk-stat/statistic-server-database";
-import { getMiddleware, execute, subscribe } from "@umk-stat/statistic-server-core";
+import { getMiddleware, execute, subscribe } from "@umk-stat/statistic-server-graphql-route";
 import { errorLogger, infoLogger } from "./loggers";
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import express from "express";
@@ -56,7 +56,7 @@ export async function runServer(): Promise<void> {
     app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
     app.use(graphql.middleware);
     const server = createServer(app);
-    
+
     const subscriptionServer = new SubscriptionServer({
         schema: graphql.schema,
         execute,
@@ -64,11 +64,11 @@ export async function runServer(): Promise<void> {
         onConnect: async () => {
             const map = await databaseApi.queries.findMapAssociations();
             const graphQLObjectMap = map.reduce((prev, val) => {
-                
+
                 const value = val.get();
                 prev.set(value.NUMBER, value.tableName);
                 return prev;
-                
+
             }, new Map<string, string>());
             const context = {
                 graphQLObjectMap,
@@ -78,12 +78,12 @@ export async function runServer(): Promise<void> {
             };
             return context;
         }
-        
+
     }, {
         server,
         path: "/subscription",
     });
-    
+
     server.listen(apiPort, () => {
         infoLogger.info("graphiql is  running");
     });
