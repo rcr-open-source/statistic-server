@@ -14,11 +14,13 @@
   "license": "ISC",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@umk-stat/statistic-server-graphql-route": "0.1.0",
     "@umk-stat/statistic-server-database": "0.0.1",
+    "@umk-stat/statistic-server-graphql-route": "0.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "subscriptions-transport-ws": "^0.9.17",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
     "winston": "^3.3.3"
   },
   "devDependencies": {

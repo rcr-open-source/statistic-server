@@ -1,4 +1,5 @@
-import { Options, initInstance } from "@umk-stat/statistic-server-database";
+import { Options,  initInstance } from "@umk-stat/statistic-server-database";
+import { Options as ClientOptions, initСlientInstance } from "@umk-stat/statistic-server-client-database";
 import { getMiddleware, execute, subscribe } from "@umk-stat/statistic-server-graphql-route";
 import { errorLogger, infoLogger } from "./loggers";
 import { SubscriptionServer } from 'subscriptions-transport-ws';
@@ -35,17 +36,17 @@ export async function runServer(): Promise<void> {
         },
     };
     const databaseApi = initInstance(options);
-
+    const clientDatabaseApi = initСlientInstance(options as ClientOptions);
     try {
         await databaseApi.sequelize.authenticate();
-
+        await clientDatabaseApi.sequelize.authenticate();
     } catch (err) {
 
         errorLogger.error(err);
         throw err;
 
     }
-    const graphql = getMiddleware(databaseApi, infoLogger, errorLogger);
+    const graphql = getMiddleware(databaseApi, clientDatabaseApi, infoLogger, errorLogger);
 
 
     const app = express();
@@ -73,6 +74,7 @@ export async function runServer(): Promise<void> {
             const context = {
                 graphQLObjectMap,
                 databaseApi,
+                clientDatabaseApi,
                 infoLogger,
                 errorLogger,
             };
